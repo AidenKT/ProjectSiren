@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "siren-demo",
-    "slug": "snack-25fbf93c-8b52-4d8f-a25f-4a4b407030de",
-    "version": "1.0.0",
+    "name": "Project Siren",
+    "slug": "snack-9166be6b-c08e-4e1a-b034-5edea3dbdd90",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#272727"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,16 +18,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.github.aidenkt.ssft.siren"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "backgroundColor": "#272727"
+      },
+      "package": "com.aidenkt.snack9166be6bc08e4e1ab0345edea3dbdd90"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6c633eba-7969-4038-9d09-6212bdef1221"
+      }
     }
   }
 }
