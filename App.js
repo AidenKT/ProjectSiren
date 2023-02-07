@@ -1,17 +1,23 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, StatusBar } from 'react-native';
 import Constants from 'expo-constants';
 
 // You can import from local files
-import SirenLogo from './components/AssetExample';
+import SirenLogo from './components/logo.js';
 
 // or any pure javascript modules available in npm
 import { Card, Button } from 'react-native-paper';
 
+const rowLetter = "A";
+
+
+
 export default function App() {
   return (
+    
     <View style={styles.container}>
-
+    <StatusBar barStyle="light-content" /> 
+    <StatusBar style="light" />
     <SirenLogo />
 
 
@@ -39,6 +45,13 @@ export default function App() {
         </Text>
       </Button>
       <Button style={styles.icon} icon="earth" color="white" />
+      <Text style={styles.terms}>
+        You're in Row {rowLetter}. <Text style={styles.underlineText}>Reselect</Text>{"\n"}
+        <Text style={styles.underlineText}>Terms of Service</Text>{"\n"}
+        <Text style={styles.underlineText}>Privacy Policy</Text>{"\n"}
+        © SIREN Project
+
+      </Text>
     </View>
   );
 }
@@ -53,12 +66,26 @@ const styles = StyleSheet.create({
   },
   title: {
     margin: 0,
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'white',
   },
   subtitle: {
+    margin: 12,
+    fontSize: 14,
+    fontWeight: 'semibold',
+    textAlign: 'center',
+    color: 'white',
+  },
+  terms: {
+    margin: 18,
+    fontSize: 14,
+    fontWeight: 'semibold',
+    textAlign: 'center',
+    color: 'white',
+  },
+  body: {
     margin: 12,
     fontSize: 14,
     fontWeight: 'semibold',
@@ -79,25 +106,37 @@ const styles = StyleSheet.create({
     tintColor: '#FFFFFF',
   },
   buttonBackground: {
-    flex: 0.13,
+    flex: 0.25,
     margin: 5,
     borderRadius: 20,
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
-    
+    marginTop: 50,
   },
   buttonBackgroundNotify: {
     backgroundColor: "#3E68FF",
-    flex: 0.13,
+    flex: 0.25,
     margin: 5,
     borderRadius: 20,
     justifyContent: 'center',
+    marginTop: 60,
   },
   buttonBackgroundEmergency: {
-    flex: 0.13,
+    flex: 0.25,
     margin: 5,
     borderRadius: 20,
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
-  }
+    marginTop: 50,
+    marginBottom: 60,
+  },
+  boldText: {
+    fontWeight: 'bold',
+    },
+  italicText: {
+    fontStyle: 'italic',
+    },
+  underlineText: {
+    textDecorationLine: 'underline',
+    }
 });
