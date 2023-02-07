@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, Image } from 'react-native';
 export default function AssetExample() {
   return (
     <View style={styles.container}>
-      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />
+      <Image style={styles.logo} source={require('../assets/siren-icon.png')} />
     </View>
   );
 }
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   logo: {
-    height: 48,
-    width: 48,
+    height: 82,
+    width: 82,
   }
 });
