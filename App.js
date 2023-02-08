@@ -124,7 +124,7 @@ function Countdown({props, route, navigation}) {
     }
     if (type == 'fakeCall') {
     action = "You will receive a fake phone call from this application with a ringtone, tap anywhere on screen to stop ringtone.";
-    warning = "Turn on the ringer to properly the ringtone.";
+    warning = "Ensure your ringer is turned on to hear the ringtone.";
     }
   
   return(
@@ -157,8 +157,8 @@ function Countdown({props, route, navigation}) {
       <Text style={styles.button}>Cancel</Text>
       </TouchableOpacity>
       <Text style={styles.terms}>
-      <Text>Entering sleep mode will interrupt the countdown.</Text>
-      <Text>It is illegal to make illegitimate calls to authorities.</Text>
+      <Text>Entering sleep mode will interrupt the countdown.{'\n'}</Text>
+      <Text>{warning}</Text>
       <Text>{'\n'}© SIREN Project</Text>
       </Text>
     </View>
