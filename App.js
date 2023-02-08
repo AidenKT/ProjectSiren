@@ -112,15 +112,19 @@ function Countdown({props, route, navigation}) {
   }, []);
 
     let action
+    let warning
 
     if (type == 'transitNotify') {
-    action = "Transit Security will be notified with information, such as your location, to best assist you";
+    action = "Transit Security will be notified with information, such as your location, to best assist you."
+    warning = "It is illegal to make illegitimate calls to authorities.";
     }
     if (type == 'callEmergency') {
     action = "Emergency Services (911) & Transit Security will be dialed with information, such as your location, to best help you.";
+    warning = "It is illegal to make illegitimate calls to authorities.";
     }
     if (type == 'fakeCall') {
     action = "You will receive a fake phone call from this application with a ringtone, tap anywhere on screen to stop ringtone.";
+    warning = "Turn on the ringer to properly the ringtone.";
     }
   
   return(
@@ -153,6 +157,7 @@ function Countdown({props, route, navigation}) {
       <Text style={styles.button}>Cancel</Text>
       </TouchableOpacity>
       <Text style={styles.terms}>
+      <Text>Entering sleep mode will interrupt the countdown.</Text>
       <Text>It is illegal to make illegitimate calls to authorities.</Text>
       <Text>{'\n'}© SIREN Project</Text>
       </Text>
