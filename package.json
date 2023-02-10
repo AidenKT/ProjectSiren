@@ -1,12 +1,24 @@
 {
-  "dependencies": {
-    "expo-constants": "~13.2.4",
-    "@expo/vector-icons": "^13.0.0",
-    "react-native-paper": "4.9.2",
-    "@react-navigation/native": "*",
-    "@react-navigation/native-stack": "*",
-    "react-native-safe-area-context": "4.3.1",
-    "react-native-screens": "~3.15.0",
-    "expo-haptics": "~11.3.0"
-  }
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+    "dependencies": {
+      "expo-constants": "~13.2.4",
+      "@expo/vector-icons": "^13.0.0",
+      "react-native-paper": "4.9.2",
+      "@react-navigation/native": "*",
+      "@react-navigation/native-stack": "*",
+      "react-native-safe-area-context": "4.3.1",
+      "react-native-screens": "~3.15.0",
+      "expo-haptics": "~11.3.0"
+    },
+  "devDependencies": {
+    "@babel/core": "^7.12.9"
+  },
+  "private": true,
+  "name": "Project Siren",
+  "version": "1.0.0"
 }
