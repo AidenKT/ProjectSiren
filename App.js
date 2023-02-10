@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import Constants from 'expo-constants';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 
 // You can import from local files
 import SirenLogo from './components/logo.js';
@@ -18,14 +19,22 @@ function MainScreen({ navigation }) {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <StatusBar style="light" />
+      <TouchableOpacity activeOpacity={0.8} onLongPress={() => {
+        Alert.alert("\n Project Siren Credits", "\n Business Lead \n Keala Minna-Choe \n \n Software Lead \n Aiden Tabrizi \n \n Hardware Lead \n Leo Tian \n \n Marketing Lead \n Kailani Minna-Choe \n \n Secretary \n Julia Aguirre \n \n Finance \n Aiden Tabrizi \n \n Advisor \n Dvora Celniker \n \n Hardware Team \n Leo Tian \n Kai Minna-Choe \n Keala Minna-Choe \n Alex Sellemi \n Jay Liang \n Eric Zage \n \n Software Team \n Aiden Tabrizi \n Kailani Minna-Choe \n Aujus Garg \n Jeremy Chen \n Madison Mendoza \n \n Business Team \n Keala Minna-Choe \n Kailani Minna-Choe \n Leo Tian \n Aiden Tabrizi \n Shruti Malladi \n Madison Mendoza \n Julia Aguirre \n \n Made with ❤️ by CCA Students in collaboration with MTS.")
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
+        }}>
       <SirenLogo />
+      </TouchableOpacity>
 
       <Text style={styles.title}>We're here to help.</Text>
       <Text style={styles.subtitle}>Select from several safety options.</Text>
       
       <TouchableOpacity
         style={styles.buttonBackgroundNotify}
-        onPress={() => navigation.navigate('WarningCountdown', {actionWarning: 'Notifying Transit Security in', type:"transitNotify"})}
+        onPress={() => {
+          navigation.navigate('WarningCountdown', {actionWarning: 'Notifying Transit Security in', type:"transitNotify"})
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+        }}
         activeOpacity={.7}
         uppercase={false}
         mode="contained"
@@ -39,7 +48,10 @@ function MainScreen({ navigation }) {
 
       <TouchableOpacity
         style={styles.buttonBackgroundCall}
-        onPress={() => navigation.navigate('WarningCountdown', {actionWarning: 'Calling you in', type:"fakeCall"})}
+        onPress={() => {
+          navigation.navigate('WarningCountdown', {actionWarning: 'Calling you in', type:"fakeCall"})
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+        }}
         labelStyle={{ color: 'black', fontWeight: 'bold' }}
         color="#3E68FF"
         activeOpacity={.7}
@@ -55,7 +67,10 @@ function MainScreen({ navigation }) {
 
       <TouchableOpacity
         style={styles.buttonBackgroundEmergency}
-        onPress={() => navigation.navigate('WarningCountdown', {actionWarning: 'Calling Emergency Services in', type:"callEmergency"})}
+        onPress={() => {
+          navigation.navigate('WarningCountdown', {actionWarning: 'Calling Emergency Services in', type:"callEmergency"})
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+        }}
         labelStyle={{ color: '#FF1616', fontWeight: 'bold' }}
         color="#3E68FF"
         activeOpacity={.7}
@@ -69,18 +84,115 @@ function MainScreen({ navigation }) {
         <Text style={styles.buttonRed}>Call the Authorities</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.icon} icon="earth" color="white" >
+      <TouchableOpacity style={styles.icon} icon="earth" color="white" onPress={() =>
+           {alert('Language customization is coming soon. -Aiden :D');}}>
       <View style={styles.iconContainer}>
       <MaterialIcons name="public" size={24} color="#FFFFFF" />
     </View>
       </TouchableOpacity>
       <Text style={styles.terms}>
         You're in Row {rowLetter}.{' '}
-        <Text style={styles.underlineText}>Reselect</Text>
+     <Text onPress={() => {
+          alert('This feature is coming soon. -Aiden :D');
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
+        }}
+           style={styles.underlineText}>
+     Reselect
+     </Text> 
         {'\n'}
-        <Text style={styles.underlineText}>Terms of Service</Text>
+     <Text onPress={() => {
+           alert('In the future will link to real Privacy Policy. For now though, I collect your device statistics, identifiers, crash, and diagonstic reports, as well as additional information on your sessions. No location or audio information is currently being used, and all data collected is through TestFlight.');
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
+     }}
+           style={styles.underlineText}>
+     Privacy Policy
+     </Text> 
         {'\n'}
-        <Text style={styles.underlineText}>Privacy Policy</Text>
+     <Text onPress={() => {
+          alert('This feature is coming soon. -Aiden :D');
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
+     }}
+           style={styles.underlineText}>
+     Terms of Service
+     </Text> 
+        {'\n'}© SIREN Project
+      </Text>
+    </View>
+  );
+}
+
+
+
+function NotificationConfirmation({props, route, navigation}) {
+  const { passedType } = route.params;
+
+    let completedAction
+    let titleAction
+    //let warning
+
+    if (passedType == 'fakeCall') {
+      titleAction = "Fake Call under construction. \n Try a different option."
+    //warning = "It is illegal to make illegitimate calls to authorities.";
+    }
+    if (passedType == 'transitNotify') {
+      titleAction = "Help is on the way."
+      completedAction = "We've notified Transit Security with your location and audio information."
+    //warning = "It is illegal to make illegitimate calls to authorities.";
+    }
+    if (passedType == 'callEmergency') {
+      titleAction = "Help is on the way."
+      completedAction = "We've notified Emergency Services and Transit Security with your location and audio information.";
+    //warning = "It is illegal to make illegitimate calls to authorities.";
+    }
+
+
+  
+  return(
+    <View style={styles.container}>
+    <StatusBar barStyle="light-content" />
+    <StatusBar style="light" />
+      <View style={styles.iconConfirm}>
+      <MaterialIcons name="check-circle" size={128} color="#FFFFFF" />
+      </View>
+    <Text style={styles.title}>{titleAction}</Text>
+    <Text style={styles.subtitle}>{completedAction}</Text>
+
+    <TouchableOpacity
+      style={styles.cancelButtonBackground}
+      onPress={() => navigation.popToTop()}
+      labelStyle={{ color: 'black', fontWeight: '500' }}
+      color="#3E68FF"
+      activeOpacity={.7}
+      uppercase={false}
+      mode="contained"
+      accessibilityLabel="This button is not complete yet.">
+      <Text style={styles.button}>Cancel</Text>
+      </TouchableOpacity>
+<Text style={styles.terms}>
+        You're in Row {rowLetter}.{' '}
+     <Text onPress={() => {
+          alert('This feature is coming soon. -Aiden :D');
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
+     }}
+           style={styles.underlineText}>
+     Reselect
+     </Text> 
+        {'\n'}
+     <Text onPress={() => {
+           alert('In the future will link to real Privacy Policy. For now though, I collect your device statistics, identifiers, crash, and diagonstic reports, as well as additional information on your sessions. No location or audio information is currently being used, and all data collected is through TestFlight.');
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
+     }}
+           style={styles.underlineText}>
+     Privacy Policy
+     </Text> 
+        {'\n'}
+     <Text onPress={() => {
+          alert('This feature is coming soon. -Aiden :D');
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
+     }}
+           style={styles.underlineText}>
+     Terms of Service
+     </Text> 
         {'\n'}© SIREN Project
       </Text>
     </View>
@@ -96,12 +208,33 @@ function Countdown({props, route, navigation}) {
     setTime(0);
   };
 
+  let passingType
+  let action
+  let warning
+
+    if (type == 'transitNotify') {
+    action = "Transit Security will be notified with information, such as your location, to best assist you."
+    warning = "It is illegal to make illegitimate calls to authorities.";
+    passingType = 'transitNotify';
+    }
+    if (type == 'callEmergency') {
+    action = "Emergency Services (911) & Transit Security will be dialed with information, such as your location, to best help you.";
+    warning = "It is illegal to make illegitimate calls to authorities.";
+    passingType = 'callEmergency';
+    }
+    if (type == 'fakeCall') {
+    action = "You will receive a fake phone call from this application with a ringtone, tap anywhere on screen to stop ringtone.";
+    warning = "Ensure your ringer is turned on to hear the ringtone.";
+    passingType = 'fakeCall';
+    }
 
   React.useEffect(() => {
     const timerId = setInterval(() => {
       timerRef.current -= 1;
       if (timerRef.current < 0) {
         clearInterval(timerId);
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        navigation.navigate('NotificationConfirmation', {passedType:passingType});
       } else {
         setTime(timerRef.current);
       }
@@ -111,21 +244,7 @@ function Countdown({props, route, navigation}) {
     };
   }, []);
 
-    let action
-    let warning
 
-    if (type == 'transitNotify') {
-    action = "Transit Security will be notified with information, such as your location, to best assist you."
-    warning = "It is illegal to make illegitimate calls to authorities.";
-    }
-    if (type == 'callEmergency') {
-    action = "Emergency Services (911) & Transit Security will be dialed with information, such as your location, to best help you.";
-    warning = "It is illegal to make illegitimate calls to authorities.";
-    }
-    if (type == 'fakeCall') {
-    action = "You will receive a fake phone call from this application with a ringtone, tap anywhere on screen to stop ringtone.";
-    warning = "Ensure your ringer is turned on to hear the ringtone.";
-    }
   
   return(
     <View style={styles.container}>
@@ -156,7 +275,7 @@ function Countdown({props, route, navigation}) {
       accessibilityLabel="Cancel">
       <Text style={styles.button}>Cancel</Text>
       </TouchableOpacity>
-      <Text style={styles.terms}>
+      <Text style={styles.instructions}>
       <Text>Entering sleep mode will interrupt the countdown.{'\n'}</Text>
       <Text>{warning}</Text>
       <Text>{'\n'}© SIREN Project</Text>
@@ -164,7 +283,6 @@ function Countdown({props, route, navigation}) {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -190,7 +308,7 @@ const styles = StyleSheet.create({
   },
   notifyImmediately: {
     margin: 12,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
     color: 'white',
@@ -199,7 +317,14 @@ const styles = StyleSheet.create({
   terms: {
     marginTop: 25,
     margin: 18,
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: 'semibold',
+    textAlign: 'center',
+    color: 'white',
+  },
+  instructions: {
+    marginTop: 95,
+    fontSize: 16,
     fontWeight: 'semibold',
     textAlign: 'center',
     color: 'white',
@@ -259,6 +384,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     tintColor: '#FFFFFF',
   },
+  iconConfirm: {
+    flex: 0.5,
+    marginBottom: 50,
+    frontWeight: 'bold',
+    justifyContent: 'center',
+    alignItems: 'center',
+    tintColor: '#FFFFFF',
+  },
   buttonBackgroundCall: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -271,13 +404,11 @@ const styles = StyleSheet.create({
     
   },
   cancelButtonBackground: {
-    flex: 0.32,
-    margin: 5,
+    flex: 0.4,
     borderRadius: 20,
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
-    marginTop: 70,
-    marginBottom: 50,
+    marginTop: 90,
   },
   buttonBackgroundNotify: {
     flexDirection: 'row',
@@ -298,7 +429,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
     marginTop: 50,
-    marginBottom: 40,
+    marginBottom: 30,
   },
   boldText: {
     fontWeight: 'bold',
@@ -318,9 +449,9 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main" screenOptions={{headerShown: false,}}>
-      
         <Stack.Screen name="Main" component={MainScreen} />
         <Stack.Screen name="WarningCountdown" component={Countdown} />
+        <Stack.Screen name="NotificationConfirmation" component={NotificationConfirmation} options={{gestureEnabled: false,}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
