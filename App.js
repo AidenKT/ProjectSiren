@@ -1,26 +1,32 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { Text, View, StyleSheet, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import Constants from 'expo-constants';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-
 // You can import from local files
 import SirenLogo from './components/logo.js';
+import LanguageSelect from './components/language.js';
+import RowSelect from './components/row.js';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+
 
 // or any pure javascript modules available in npm
 import { Card, Button } from 'react-native-paper';
 
-const rowLetter = 'A';
 
 function MainScreen({ navigation }) {
+  const [rowLetter, setRowLetter] = useState('A');
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <StatusBar style="light" />
       <TouchableOpacity activeOpacity={0.8} onLongPress={() => {
-        Alert.alert("\n Project Siren Credits", "\n Business Lead \n Keala Minna-Choe \n \n Software Lead \n Aiden Tabrizi \n \n Hardware Lead \n Leo Tian \n \n Marketing Lead \n Kailani Minna-Choe \n \n Secretary \n Julia Aguirre \n \n Finance \n Aiden Tabrizi \n \n Advisor \n Dvora Celniker \n \n Hardware Team \n Leo Tian \n Kai Minna-Choe \n Keala Minna-Choe \n Alex Sellemi \n Jay Liang \n Eric Zage \n \n Software Team \n Aiden Tabrizi \n Kailani Minna-Choe \n Aujus Garg \n Jeremy Chen \n Madison Mendoza \n \n Business Team \n Keala Minna-Choe \n Kailani Minna-Choe \n Leo Tian \n Aiden Tabrizi \n Shruti Malladi \n Madison Mendoza \n Julia Aguirre \n \n Made with ❤️ by CCA Students in collaboration with MTS.")
+        Alert.alert("\n Project Siren Credits", "\n Software Lead \n Aiden Tabrizi \n \n Business Lead \n Keala Minna-Choe \n \n Hardware Lead \n Leo Tian \n \n Marketing Lead \n Kailani Minna-Choe \n \n Secretary \n Julia Aguirre \n \n Finance \n Aiden Tabrizi \n \n Advisor \n Dvora Celniker \n \n Hardware Team \n Leo Tian \n Kai Minna-Choe \n Keala Minna-Choe \n Alex Sellemi \n Jay Liang \n \n Software Team \n Aiden Tabrizi \n Kailani Minna-Choe \n Madison Mendoza \n \n Business Team \n Keala Minna-Choe \n Kailani Minna-Choe \n Leo Tian \n Aiden Tabrizi \n Shruti Malladi \n Madison Mendoza \n Julia Aguirre \n \n Localization \n Aiden Tabrizi - English \n Julia Aguirre - Spanish \n \n Special Thanks \n STEM Solutions for Tomorrow Club \n \n Made with ❤️ by Canyon Crest Academy Students in collaboration with San Diego MTS.", [
+      {text: 'Go Back', style: 'cancel'},
+    ]);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
         }}>
       <SirenLogo />
@@ -83,22 +89,24 @@ function MainScreen({ navigation }) {
     </View>
         <Text style={styles.buttonRed}>Call the Authorities</Text>
       </TouchableOpacity>
+      
+      <View style={styles.icon}>
+        <ActionSheetProvider>
+          <LanguageSelect />
+        </ActionSheetProvider>
+      </View>
 
-      <TouchableOpacity style={styles.icon} icon="earth" color="white" onPress={() =>
-           {alert('Language customization is coming soon. -Aiden :D');}}>
-      <View style={styles.iconContainer}>
-      <MaterialIcons name="public" size={24} color="#FFFFFF" />
-    </View>
-      </TouchableOpacity>
       <Text style={styles.terms}>
         You're in Row {rowLetter}.{' '}
-     <Text onPress={() => {
-          alert('This feature is coming soon. -Aiden :D');
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
-        }}
-           style={styles.underlineText}>
-     Reselect
-     </Text> 
+
+      <View style={styles.reselect}>
+      <ActionSheetProvider>
+        <RowSelect rowLetter={rowLetter} setRowLetter={setRowLetter}/>
+      </ActionSheetProvider>
+
+      </View>
+
+
         {'\n'}
      <Text onPress={() => {
            alert('In the future will link to real Privacy Policy. For now though, I collect your device statistics, identifiers, crash, and diagonstic reports, as well as additional information on your sessions. No location or audio information is currently being used, and all data collected is through TestFlight.');
@@ -136,7 +144,7 @@ function NotificationConfirmation({props, route, navigation}) {
     }
     if (passedType == 'transitNotify') {
       titleAction = "Help is on the way."
-      completedAction = "We've notified Transit Security with your location and audio information."
+      completedAction = "We've notified Transit Security with your location and audio information to assist you."
     //warning = "It is illegal to make illegitimate calls to authorities.";
     }
     if (passedType == 'callEmergency') {
@@ -158,17 +166,17 @@ function NotificationConfirmation({props, route, navigation}) {
     <Text style={styles.subtitle}>{completedAction}</Text>
 
     <TouchableOpacity
-      style={styles.cancelButtonBackground}
+      style={styles.backHomeButtonBackground}
       onPress={() => navigation.popToTop()}
       labelStyle={{ color: 'black', fontWeight: '500' }}
       color="#3E68FF"
       activeOpacity={.7}
       uppercase={false}
       mode="contained"
-      accessibilityLabel="This button is not complete yet.">
-      <Text style={styles.button}>Cancel</Text>
+      accessibilityLabel="Back to Home Screen.">
+      <Text style={styles.button}>Back to Home Screen</Text>
       </TouchableOpacity>
-<Text style={styles.terms}>
+<Text style={styles.confirmTerms}>
         You're in Row {rowLetter}.{' '}
      <Text onPress={() => {
           alert('This feature is coming soon. -Aiden :D');
@@ -213,7 +221,7 @@ function Countdown({props, route, navigation}) {
   let warning
 
     if (type == 'transitNotify') {
-    action = "Transit Security will be notified with information, such as your location, to best assist you."
+    action = "Transit Security will be notified with information, such as your location and audio information, to best assist you."
     warning = "It is illegal to make illegitimate calls to authorities.";
     passingType = 'transitNotify';
     }
@@ -316,7 +324,7 @@ const styles = StyleSheet.create({
   },
   terms: {
     marginTop: 25,
-    margin: 18,
+   // margin: 18,
     fontSize: 16,
     fontWeight: 'semibold',
     textAlign: 'center',
@@ -329,9 +337,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
   },
-  body: {
-    margin: 12,
-    fontSize: 14,
+  confirmTerms: {
+    marginTop: 85,
+    fontSize: 16,
     fontWeight: 'semibold',
     textAlign: 'center',
     color: 'white',
@@ -376,14 +384,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
   },
-  icon: {
-    flex: 0.15,
-    margin: 0,
-    frontWeight: 'bold',
-    justifyContent: 'center',
-    alignItems: 'center',
-    tintColor: '#FFFFFF',
-  },
   iconConfirm: {
     flex: 0.5,
     marginBottom: 50,
@@ -395,35 +395,59 @@ const styles = StyleSheet.create({
   buttonBackgroundCall: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 0.25,
+    flex: 0.35,
     margin: 5,
     borderRadius: 20,
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
     marginTop: 50,
-    
   },
   cancelButtonBackground: {
-    flex: 0.4,
+    flex: 0.35,
     borderRadius: 20,
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
-    marginTop: 90,
+    marginTop: 65,
+  },
+  backHomeButtonBackground: {
+    flex: 0.20,
+    borderRadius: 20,
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    marginTop: 130,
+    marginBottom: 0,
   },
   buttonBackgroundNotify: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#3E68FF',
-    flex: 0.25,
+    flex: 0.35,
     margin: 5,
     borderRadius: 20,
     justifyContent: 'center',
     marginTop: 60,
   },
+  icon: {
+    flex: 0.17,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 0,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  reselect: {
+    flex: 0.05,
+    marginTop: 10,
+    padding: 0,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   buttonBackgroundEmergency: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 0.25,
+    flex: 0.35,
     margin: 5,
     borderRadius: 20,
     justifyContent: 'center',
@@ -431,21 +455,17 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 30,
   },
-  boldText: {
-    fontWeight: 'bold',
-  },
-  italicText: {
-    fontStyle: 'italic',
-  },
   underlineText: {
     textDecorationLine: 'underline',
   },
+  
 });
 
 
 const Stack = createNativeStackNavigator();
 
 function App() {
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main" screenOptions={{headerShown: false,}}>
