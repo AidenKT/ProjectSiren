@@ -2,7 +2,7 @@
   "expo": {
     "name": "Project Siren",
     "slug": "snack-9166be6b-c08e-4e1a-b034-5edea3dbdd90",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
