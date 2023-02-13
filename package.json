@@ -18,7 +18,7 @@
       "react-native-maps": "1.3.2",
       "@react-native-community/picker": "*",
       "@expo/react-native-action-sheet": "*"
-    }
+    },
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
