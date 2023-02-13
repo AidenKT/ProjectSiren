@@ -16,7 +16,7 @@
       "expo-haptics": "~12.0.1",
       "react-native-popup-menu": "*",
       "react-native-maps": "1.3.2",
-      "@react-native-community/picker": "*",
+      "@react-native-picker/picker": "*",
       "@expo/react-native-action-sheet": "*"
     },
   "devDependencies": {
