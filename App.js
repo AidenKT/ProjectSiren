@@ -1,24 +1,22 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { Text, View, StyleSheet, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import Constants from 'expo-constants';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+
 // You can import from local files
 import SirenLogo from './components/logo.js';
 import LanguageSelect from './components/language.js';
-import RowSelect from './components/row.js';
-import { ActionSheetProvider } from '@expo/react-native-action-sheet';
-
 
 // or any pure javascript modules available in npm
 import { Card, Button } from 'react-native-paper';
 
+const rowLetter = 'A';
 
 function MainScreen({ navigation }) {
-  const [rowLetter, setRowLetter] = useState('A');
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -99,12 +97,14 @@ function MainScreen({ navigation }) {
       <Text style={styles.terms}>
         You're in Row {rowLetter}.{' '}
 
-      <View style={styles.reselect}>
-      <ActionSheetProvider>
-        <RowSelect rowLetter={rowLetter} setRowLetter={setRowLetter}/>
-      </ActionSheetProvider>
+     <Text onPress={() => {
+          alert('This feature is coming soon. -Aiden :D');
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
+        }}
+           style={styles.underlineText}>
+     Reselect
+     </Text>
 
-      </View>
 
 
         {'\n'}
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
   },
   terms: {
     marginTop: 25,
-   // margin: 18,
+    margin: 18,
     fontSize: 16,
     fontWeight: 'semibold',
     textAlign: 'center',
@@ -340,6 +340,13 @@ const styles = StyleSheet.create({
   confirmTerms: {
     marginTop: 85,
     fontSize: 16,
+    fontWeight: 'semibold',
+    textAlign: 'center',
+    color: 'white',
+  },
+  body: {
+    margin: 12,
+    fontSize: 14,
     fontWeight: 'semibold',
     textAlign: 'center',
     color: 'white',
@@ -384,6 +391,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
   },
+  icon: {
+    flex: 0.15,
+    margin: 0,
+    frontWeight: 'bold',
+    justifyContent: 'center',
+    alignItems: 'center',
+    tintColor: '#FFFFFF',
+  },
   iconConfirm: {
     flex: 0.5,
     marginBottom: 50,
@@ -395,59 +410,43 @@ const styles = StyleSheet.create({
   buttonBackgroundCall: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 0.35,
+    flex: 0.25,
     margin: 5,
     borderRadius: 20,
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
     marginTop: 50,
+    
   },
   cancelButtonBackground: {
-    flex: 0.35,
+    flex: 0.4,
     borderRadius: 20,
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
-    marginTop: 65,
-  },
-  backHomeButtonBackground: {
-    flex: 0.20,
-    borderRadius: 20,
-    justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
-    marginTop: 130,
-    marginBottom: 0,
+    marginTop: 90,
   },
   buttonBackgroundNotify: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#3E68FF',
-    flex: 0.35,
+    flex: 0.25,
     margin: 5,
     borderRadius: 20,
     justifyContent: 'center',
     marginTop: 60,
   },
-  icon: {
-    flex: 0.17,
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 0,
-    fontWeight: 'bold',
+  backHomeButtonBackground: {
+    flex: 0.225,
+    borderRadius: 20,
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  reselect: {
-    flex: 0.05,
-    marginTop: 10,
-    padding: 0,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    marginTop: 185,
+    marginBottom: 0,
   },
   buttonBackgroundEmergency: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 0.35,
+    flex: 0.25,
     margin: 5,
     borderRadius: 20,
     justifyContent: 'center',
@@ -455,17 +454,21 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 30,
   },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  italicText: {
+    fontStyle: 'italic',
+  },
   underlineText: {
     textDecorationLine: 'underline',
   },
-  
 });
 
 
 const Stack = createNativeStackNavigator();
 
 function App() {
-
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main" screenOptions={{headerShown: false,}}>
