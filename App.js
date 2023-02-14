@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { Text, View, StyleSheet, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import Constants from 'expo-constants';
 import {NavigationContainer} from '@react-navigation/native';
@@ -10,6 +11,7 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 // You can import from local files
 import SirenLogo from './components/logo.js';
 import LanguageSelect from './components/language.js';
+import RowSelect from './components/row.js';
 
 // or any pure javascript modules available in npm
 import { Card, Button } from 'react-native-paper';
@@ -17,7 +19,9 @@ import { Card, Button } from 'react-native-paper';
 const rowLetter = 'A';
 
 function MainScreen({ navigation }) {
+  const [rowLetter, setRowLetter] = useState('A');
   return (
+    <ActionSheetProvider>
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <StatusBar style="light" />
@@ -36,7 +40,7 @@ function MainScreen({ navigation }) {
       <TouchableOpacity
         style={styles.buttonBackgroundNotify}
         onPress={() => {
-          navigation.navigate('WarningCountdown', {actionWarning: 'Notifying Transit Security in', type:"transitNotify"})
+          navigation.navigate('WarningCountdown', {actionWarning: 'Notifying Transit Security in', type:"transitNotify", row:rowLetter})
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
         }}
         activeOpacity={.7}
@@ -53,7 +57,7 @@ function MainScreen({ navigation }) {
       <TouchableOpacity
         style={styles.buttonBackgroundCall}
         onPress={() => {
-          navigation.navigate('WarningCountdown', {actionWarning: 'Calling you in', type:"fakeCall"})
+          navigation.navigate('WarningCountdown', {actionWarning: 'Calling you in', type:"fakeCall", row:rowLetter})
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
         }}
         labelStyle={{ color: 'black', fontWeight: 'bold' }}
@@ -72,7 +76,7 @@ function MainScreen({ navigation }) {
       <TouchableOpacity
         style={styles.buttonBackgroundEmergency}
         onPress={() => {
-          navigation.navigate('WarningCountdown', {actionWarning: 'Calling Emergency Services in', type:"callEmergency"})
+          navigation.navigate('WarningCountdown', {actionWarning: 'Calling Emergency Services in', type:"callEmergency", row:rowLetter})
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
         }}
         labelStyle={{ color: '#FF1616', fontWeight: 'bold' }}
@@ -89,27 +93,19 @@ function MainScreen({ navigation }) {
       </TouchableOpacity>
       
       <View style={styles.icon}>
-        <ActionSheetProvider>
           <LanguageSelect />
-        </ActionSheetProvider>
       </View>
 
       <Text style={styles.terms}>
         You're in Row {rowLetter}.{' '}
 
-     <Text onPress={() => {
-          alert('This feature is coming soon. -Aiden :D');
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
-        }}
-           style={styles.underlineText}>
-     Reselect
-     </Text>
-
-
+     <View>
+     <RowSelect rowLetter={rowLetter} setRowLetter={setRowLetter}/>
+     </View>
 
         {'\n'}
      <Text onPress={() => {
-           alert('In the future will link to real Privacy Policy. For now though, I collect your device statistics, identifiers, crash, and diagonstic reports, as well as additional information on your sessions. No location or audio information is currently being used, and all data collected is through TestFlight.');
+           Alert.alert('Privacy Policy', 'In the future will link to real Privacy Policy. For now though, I collect your device statistics, identifiers, crash, and diagonstic reports, as well as additional information on your sessions. No location or audio information is currently being used, and all data collected is through TestFlight.');
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
      }}
            style={styles.underlineText}>
@@ -126,13 +122,14 @@ function MainScreen({ navigation }) {
         {'\n'}© SIREN Project
       </Text>
     </View>
+        </ActionSheetProvider>
   );
 }
 
 
 
 function NotificationConfirmation({props, route, navigation}) {
-  const { passedType } = route.params;
+  const { passedType, row } = route.params;
 
     let completedAction
     let titleAction
@@ -177,14 +174,7 @@ function NotificationConfirmation({props, route, navigation}) {
       <Text style={styles.button}>Back to Home Screen</Text>
       </TouchableOpacity>
 <Text style={styles.confirmTerms}>
-        You're in Row {rowLetter}.{' '}
-     <Text onPress={() => {
-          alert('This feature is coming soon. -Aiden :D');
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
-     }}
-           style={styles.underlineText}>
-     Reselect
-     </Text> 
+        You're in Row {row}.
         {'\n'}
      <Text onPress={() => {
            alert('In the future will link to real Privacy Policy. For now though, I collect your device statistics, identifiers, crash, and diagonstic reports, as well as additional information on your sessions. No location or audio information is currently being used, and all data collected is through TestFlight.');
@@ -204,11 +194,12 @@ function NotificationConfirmation({props, route, navigation}) {
         {'\n'}© SIREN Project
       </Text>
     </View>
+    
   );
 }
 
 function Countdown({props, route, navigation}) {
-  const { actionWarning, type } = route.params;
+  const { actionWarning, type, row } = route.params;
   const [time, setTime] = React.useState(10);
   const timerRef = React.useRef(time);
   const immediateNotify = () => {
@@ -242,7 +233,7 @@ function Countdown({props, route, navigation}) {
       if (timerRef.current < 0) {
         clearInterval(timerId);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        navigation.navigate('NotificationConfirmation', {passedType:passingType});
+        navigation.navigate('NotificationConfirmation', {passedType:passingType, row:row});
       } else {
         setTime(timerRef.current);
       }
