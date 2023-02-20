@@ -19,9 +19,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.github.aidenkt.ssft.siren"
+      "bundleIdentifier": "com.github.aidenkt.ssft.siren",
+      "infoPlist": {
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "We use your location to ensure Transit Security can quickly locate you in the event of an emergency.",
+        "UIBackgroundModes": ["location", "fetch"]
+      }
     },
     "android": {
+      "permissions": ["ACCESS_BACKGROUND_LOCATION"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#272727"
