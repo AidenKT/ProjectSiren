@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Project Siren",
+    "slug": "snack-9166be6b-c08e-4e1a-b034-5edea3dbdd90",
+    "version": "0.1.31",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#272727"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "We use your location to assist Transit Security in locating you quickly in the event of an emergency."
+        }
+      ]
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.github.aidenkt.ssft.siren",
+      "infoPlist": {
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "We use your location to ensure Transit Security can quickly locate you in the event of an emergency.",
+        "UIBackgroundModes": ["location", "fetch"]
+      }
+    },
+    "android": {
+      "permissions": ["ACCESS_BACKGROUND_LOCATION"],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#272727"
+      },
+      "package": "com.aidenkt.snack9166be6bc08e4e1ab0345edea3dbdd90"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6c633eba-7969-4038-9d09-6212bdef1221"
+      }
+    }
+  }
+}
