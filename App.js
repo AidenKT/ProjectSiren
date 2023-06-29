@@ -141,7 +141,7 @@ function MainScreen({ navigation }) {
           <Text
             onPress={() => {
               Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
-              WebBrowser.openBrowserAsync('https://projectsiren.org/privacy');
+              WebBrowser.openBrowserAsync('https://www.projectsiren.org/privacy');
             }}
             style={styles.underlineText}>
             Privacy Policy
@@ -150,7 +150,7 @@ function MainScreen({ navigation }) {
           <Text
             onPress={() => {
               Haptics.notificationAsync(Haptics.NotificationFeedbackType.Light);
-              WebBrowser.openBrowserAsync('https://projectsiren.org/terms');
+              WebBrowser.openBrowserAsync('https://www.projectsiren.org/terms');
             }}
             style={styles.underlineText}>
             Terms of Service
